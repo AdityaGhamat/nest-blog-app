@@ -1,0 +1,14 @@
+POST http://localhost:3000/posts
+Content-Type:application/json
+{
+  "title": "Exploring the Depths of Generative AI",
+  "postType": "post",
+  "slug": "exploring-generative-ai-depths-xyzz",
+  "status": "draft",
+  "content": "This article dives deep into the fascinating world of generative artificial intelligence, covering its history, current applications, and future potential. We'll explore various models and their underlying mechanisms, providing insights for both beginners and advanced practitioners.",
+  "schema": "{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"NewsArticle\",\n  \"headline\": \"Exploring the Depths of Generative AI\",\n  \"image\": [\n    \"https://example.com/ai-image.jpg\"\n  ],\n  \"datePublished\": \"2025-01-15T09:00:00Z\",\n  \"dateModified\": \"2025-01-15T10:30:00Z\",\n  \"author\": {\n    \"@type\": \"Person\",\n    \"name\": \"Alex Johnson\"\n  }\n}",
+  "featuredImageUrl": "https://images.unsplash.com/photo-1620712943206-df538e1465e9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+  "publishedOn": "2025-01-15T11:00:00.000Z",
+  "tags": [1],
+  "authorId":2
+}

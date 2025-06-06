@@ -1,0 +1,9 @@
+POST http://localhost:3000/tags
+Content-Type:application/json
+{
+  "name": "Javascript",
+  "slug": "web-development,app-development",
+  "description": "Tags related to all aspects of web development, including frontend, backend, and fullstack technologies.",
+  "schema": "{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"DefinedTerm\",\n  \"name\": \"Web Development\",\n  \"description\": \"Category for articles, tutorials, and resources on web development.\"\n}",
+  "featuredImageUrl": "https://images.unsplash.com/photo-1549427042-45452f144d47?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+}
