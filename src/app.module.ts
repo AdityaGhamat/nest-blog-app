@@ -7,18 +7,24 @@ import { MetaOptionsModule } from './meta-options/meta-options.module';
 import { PostsModule } from './posts/posts.module';
 import { TagsModule } from './tags/tags.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
+const Env = process.env.NODE_ENV;
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: !Env ? '.env' : `.env.${Env}`,
+    }),
     AuthModule,
     TypeOrmModule.forRootAsync({
-      imports: [],
-      inject: [],
-      useFactory: () => ({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         autoLoadEntities: true,
         synchronize: true,
-        url: 'postgresql://neondb_owner:npg_eq6joyVGu2XH@ep-fragrant-mouse-a1hlkbns-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require',
+        url: configService.get<string>('DB_URL'),
       }),
     }),
     UsersModule,
