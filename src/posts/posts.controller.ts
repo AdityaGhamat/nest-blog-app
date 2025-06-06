@@ -23,6 +23,7 @@ export class PostsController {
 
   @Get()
   public getAllPosts() {
+    console.log(process.env.NODE_ENV);
     return this.postService.findAllPosts();
   }
 

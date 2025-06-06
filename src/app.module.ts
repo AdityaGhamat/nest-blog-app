@@ -8,13 +8,16 @@ import { PostsModule } from './posts/posts.module';
 import { TagsModule } from './tags/tags.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-
+import appConfig from './config/app.config';
+import databaseConfig from './config/database.config';
 const Env = process.env.NODE_ENV;
+
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: !Env ? '.env' : `.env.${Env}`,
+      load: [appConfig, databaseConfig],
     }),
     AuthModule,
     TypeOrmModule.forRootAsync({
@@ -22,9 +25,11 @@ const Env = process.env.NODE_ENV;
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
-        autoLoadEntities: true,
-        synchronize: true,
-        url: configService.get<string>('DB_URL'),
+        autoLoadEntities: configService.get<boolean>(
+          'database.autoLoadEntities',
+        ),
+        synchronize: configService.get<boolean>('database.synchronie'),
+        url: configService.get<string>('database.db_url'),
       }),
     }),
     UsersModule,
