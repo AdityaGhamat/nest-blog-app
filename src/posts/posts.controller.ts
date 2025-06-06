@@ -35,4 +35,9 @@ export class PostsController {
   public deletePost(@Query('id', ParseIntPipe) id: number) {
     return this.postService.deletePost(id);
   }
+
+  @Delete('soft-delete')
+  public softDelete(@Query('id', ParseIntPipe) id: number) {
+    return this.postService.softDeletePost(id);
+  }
 }

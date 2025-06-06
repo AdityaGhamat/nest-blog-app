@@ -1,5 +1,6 @@
 import {
   Column,
+  DeleteDateColumn,
   Entity,
   JoinTable,
   ManyToMany,
@@ -70,6 +71,9 @@ export class Post {
     nullable: true,
   })
   publishedOn?: Date;
+
+  @DeleteDateColumn()
+  deletedDate?: Date;
 
   @ManyToOne(() => User, (user) => user.post)
   author: User;
