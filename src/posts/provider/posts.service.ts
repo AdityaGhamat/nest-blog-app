@@ -1,4 +1,9 @@
-import { Injectable, Query } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  Query,
+  RequestTimeoutException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Post } from '../entity/post.entity';
 import { Repository } from 'typeorm';
@@ -40,22 +45,62 @@ export class PostsService {
   }
 
   public async findAllPosts() {
-    const response = await this.postRepository.find({
-      relations: {
-        author: true,
-        tags: true,
-      },
-    });
+    let response;
+    try {
+      response = await this.postRepository.find({
+        relations: {
+          author: true,
+          tags: true,
+        },
+      });
+    } catch (error) {
+      throw new RequestTimeoutException(
+        'Unable to process your request at the moment please try later',
+        {
+          description: 'Error connecting to the database',
+        },
+      );
+    }
     return response;
   }
 
   public async editPost(updatePostDto: UpdatePostDTO) {
     //finding tags
-    const tags = await this.tagService.findMultipleTags(updatePostDto.tags);
-
+    let tags = undefined;
+    let post = undefined;
+    try {
+      tags = await this.tagService.findMultipleTags(updatePostDto.tags);
+    } catch (error) {
+      throw new RequestTimeoutException(
+        'Unable to process your request at the moment please try later',
+        {
+          description: 'Error connecting to the database',
+        },
+      );
+    }
+    if (!tags) {
+      throw new NotFoundException('Requested tag is not found', {
+        description: 'Tag is not in database',
+      });
+    }
     //finding post
-    const post = await this.postRepository.findOneBy({ id: updatePostDto.id });
-
+    try {
+      post = await this.postRepository.findOneBy({
+        id: updatePostDto.id,
+      });
+    } catch (error) {
+      throw new RequestTimeoutException(
+        'Unable to process your request at the moment please try later',
+        {
+          description: 'Error connecting to the database',
+        },
+      );
+    }
+    if (!post) {
+      throw new NotFoundException('Requested post is not found', {
+        description: 'Post is not in database',
+      });
+    }
     //updating post
 
     post.title = updatePostDto.title ?? post.title;
@@ -80,7 +125,16 @@ export class PostsService {
   }
 
   public async softDeletePost(id: number) {
-    await this.postRepository.softDelete(id);
+    try {
+      await this.postRepository.softDelete(id);
+    } catch (error) {
+      throw new RequestTimeoutException(
+        'Unable to process your request at the moment please try later',
+        {
+          description: 'Error connecting to the database',
+        },
+      );
+    }
     return { deleted: true, id };
   }
 }

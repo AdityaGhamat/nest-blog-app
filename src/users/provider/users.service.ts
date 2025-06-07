@@ -7,8 +7,8 @@ import {
 import { CreateUserDTO } from '../dto/create-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entity/user.entity';
-import { Repository } from 'typeorm';
-import { NotFoundError } from 'rxjs';
+import { DataSource, Repository } from 'typeorm';
+import { CreateManyUsersProvider } from './create-many-users.provider';
 
 @Injectable()
 export class UsersService {
@@ -19,6 +19,11 @@ export class UsersService {
 
     @InjectRepository(User)
     private userRepository: Repository<User>,
+
+    /*
+    Inject createManyUsersProvider
+    */
+    private readonly createManyUserProvider: CreateManyUsersProvider,
   ) {}
 
   //creating a user
@@ -66,7 +71,7 @@ export class UsersService {
 
   //finding user by id
   public async findById(id: number) {
-    let user;
+    let user: User;
     try {
       user = await this.userRepository.findOneBy({ id });
     } catch (error) {
@@ -83,5 +88,9 @@ export class UsersService {
       });
     }
     return user;
+  }
+
+  public async createMany(createUserDto: CreateUserDTO[]) {
+    return await this.createManyUserProvider.createMany(createUserDto);
   }
 }
