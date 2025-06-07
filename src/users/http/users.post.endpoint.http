@@ -6,3 +6,16 @@ Content-Type:application/json
     "email":"adityaghamat01@gmail.com",
     "password":"password"
 }
+
+POST http://localhost:3000/users/create-many
+Content-Type:application/json
+{
+    "user":[
+        {
+        "firstname":"aditya2",
+        "lastname":"ghamat2",
+        "email":"adityaghamat03@gmail.com",
+        "password":"password"
+        }
+    ]
+}

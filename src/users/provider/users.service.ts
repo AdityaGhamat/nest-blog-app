@@ -9,6 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entity/user.entity';
 import { DataSource, Repository } from 'typeorm';
 import { CreateManyUsersProvider } from './create-many-users.provider';
+import { CreateManyUserDTO } from '../dto/create-many-users.dto';
 
 @Injectable()
 export class UsersService {
@@ -90,7 +91,7 @@ export class UsersService {
     return user;
   }
 
-  public async createMany(createUserDto: CreateUserDTO[]) {
-    return await this.createManyUserProvider.createMany(createUserDto);
+  public async createMany(createUsersDto: CreateManyUserDTO) {
+    return await this.createManyUserProvider.createMany(createUsersDto);
   }
 }
