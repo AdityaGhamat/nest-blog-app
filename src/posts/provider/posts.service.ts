@@ -11,6 +11,8 @@ import { CreatePostDTO } from '../dto/create-posts.dto';
 import { UsersService } from 'src/users/provider/users.service';
 import { TagsService } from 'src/tags/provider/tags.service';
 import { UpdatePostDTO } from '../dto/update-posts.dto';
+import { GetPostsDTO } from '../dto/get-all-posts-param.dto';
+import { PaginationProvider } from 'src/common/pagination/proivder/pagination.provider';
 
 @Injectable()
 export class PostsService {
@@ -31,28 +33,36 @@ export class PostsService {
     Inject Tag service
     */
     private readonly tagService: TagsService,
+
+    /*
+    Injecting Pagination provider
+    */
+    private readonly paginationProvider: PaginationProvider,
   ) {}
 
   public async createPost(createPostDto: CreatePostDTO) {
     const author = await this.userService.findById(createPostDto.authorId);
     const tags = await this.tagService.findMultipleTags(createPostDto.tags);
+    const publishedOn = new Date();
     const response = this.postRepository.create({
       ...createPostDto,
       author: author,
       tags: tags,
+      publishedOn: publishedOn,
     });
     return await this.postRepository.save(response);
   }
 
-  public async findAllPosts() {
+  public async findAllPosts(getPostDto: GetPostsDTO) {
     let response;
     try {
-      response = await this.postRepository.find({
-        relations: {
-          author: true,
-          tags: true,
+      response = await this.paginationProvider.paginateQuery(
+        {
+          limit: getPostDto.limit,
+          page: getPostDto.page,
         },
-      });
+        this.postRepository,
+      );
     } catch (error) {
       throw new RequestTimeoutException(
         'Unable to process your request at the moment please try later',

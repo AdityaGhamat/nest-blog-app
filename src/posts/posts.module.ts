@@ -7,6 +7,7 @@ import { PostMetaOptionsEntity } from './entity/post.metaOptions.entity';
 import { UsersService } from 'src/users/provider/users.service';
 import { UsersModule } from 'src/users/users.module';
 import { TagsModule } from 'src/tags/tags.module';
+import { PaginationModule } from 'src/common/pagination/pagination.module';
 
 @Module({
   controllers: [PostsController],
@@ -15,6 +16,7 @@ import { TagsModule } from 'src/tags/tags.module';
     TypeOrmModule.forFeature([Post]),
     UsersModule,
     forwardRef(() => TagsModule),
+    PaginationModule,
   ],
   exports: [PostsService],
 })

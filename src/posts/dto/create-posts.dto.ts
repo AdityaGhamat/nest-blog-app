@@ -11,6 +11,7 @@ import {
 } from 'class-validator';
 import { PostTypes, POSTSTATUS } from '../enum/post.enum';
 import { Tag } from 'src/tags/entity/tag.entity';
+import { Type } from 'class-transformer';
 
 export class CreatePostDTO {
   @IsString()
@@ -46,8 +47,9 @@ export class CreatePostDTO {
   @IsOptional()
   featuredImageUrl?: string;
 
-  @IsISO8601()
+  // @IsISO8601()
   @IsOptional()
+  // @Type(() => Date)
   publishedOn: Date;
 
   @IsOptional()

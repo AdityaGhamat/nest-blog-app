@@ -11,6 +11,7 @@ import { PostsService } from './provider/posts.service';
 import { CreatePostDTO } from './dto/create-posts.dto';
 import { Body } from '@nestjs/common';
 import { UpdatePostDTO } from './dto/update-posts.dto';
+import { GetPostsDTO } from './dto/get-all-posts-param.dto';
 
 @Controller('posts')
 export class PostsController {
@@ -22,9 +23,8 @@ export class PostsController {
   }
 
   @Get()
-  public getAllPosts() {
-    console.log(process.env.NODE_ENV);
-    return this.postService.findAllPosts();
+  public getAllPosts(@Query() getPostsDto: GetPostsDTO) {
+    return this.postService.findAllPosts(getPostsDto);
   }
 
   @Patch()
