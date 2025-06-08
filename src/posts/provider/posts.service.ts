@@ -13,6 +13,7 @@ import { TagsService } from 'src/tags/provider/tags.service';
 import { UpdatePostDTO } from '../dto/update-posts.dto';
 import { GetPostsDTO } from '../dto/get-all-posts-param.dto';
 import { PaginationProvider } from 'src/common/pagination/proivder/pagination.provider';
+import { PaginationInterface } from 'src/common/pagination/interface/pagination.interface';
 
 @Injectable()
 export class PostsService {
@@ -53,7 +54,9 @@ export class PostsService {
     return await this.postRepository.save(response);
   }
 
-  public async findAllPosts(getPostDto: GetPostsDTO) {
+  public async findAllPosts(
+    getPostDto: GetPostsDTO,
+  ): Promise<PaginationInterface<Post>> {
     let response;
     try {
       response = await this.paginationProvider.paginateQuery(
