@@ -8,6 +8,7 @@ import { UsersModule } from 'src/users/users.module';
 @Module({
   providers: [
     AuthService,
+    BcryptProvider,
     {
       provide: HashingProvider,
       useClass: BcryptProvider,

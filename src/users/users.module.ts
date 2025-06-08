@@ -6,10 +6,11 @@ import { User } from './entity/user.entity';
 import { CreateManyUsersProvider } from './provider/create-many-users.provider';
 import { AuthModule } from 'src/auth/auth.module';
 import { CreateUserProvider } from './provider/create-user.provider';
+import { FindByEmailProvider } from './provider/find-by-email.provider';
 
 @Module({
   controllers: [UsersController],
-  providers: [UsersService, CreateManyUsersProvider, CreateUserProvider],
+  providers: [UsersService, CreateManyUsersProvider, CreateUserProvider, FindByEmailProvider],
   imports: [TypeOrmModule.forFeature([User]), forwardRef(() => AuthModule)],
   exports: [UsersService],
 })

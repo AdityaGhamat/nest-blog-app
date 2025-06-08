@@ -1,14 +1,16 @@
 import {
   BadRequestException,
   ConflictException,
+  Inject,
   Injectable,
   RequestTimeoutException,
+  forwardRef,
 } from '@nestjs/common';
 import { CreateUserDTO } from '../dto/create-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entity/user.entity';
 import { Repository } from 'typeorm';
-import { BcryptProvider } from 'src/auth/provider/bcrypt.provider';
+import { HashingProvider } from 'src/auth/provider/hashing.provider';
 @Injectable()
 export class CreateUserProvider {
   constructor(
@@ -21,7 +23,8 @@ export class CreateUserProvider {
     /*
      Injecting bcrypt provider
      */
-    private readonly bcryptProvider: BcryptProvider,
+    @Inject(forwardRef(() => HashingProvider))
+    private readonly hashProvider: HashingProvider,
   ) {}
   public async createUser(createUserDto: CreateUserDTO) {
     let existingUser = undefined;
@@ -46,7 +49,7 @@ export class CreateUserProvider {
     }
     let newUser;
     try {
-      const password = await this.bcryptProvider.hashPassword(
+      const password = await this.hashProvider.hashPassword(
         createUserDto.password,
       );
       newUser = this.userRepository.create({ ...createUserDto, password });

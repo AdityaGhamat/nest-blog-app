@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Injectable,
   NotFoundException,
   RequestTimeoutException,
@@ -10,6 +9,8 @@ import { User } from '../entity/user.entity';
 import { DataSource, Repository } from 'typeorm';
 import { CreateManyUsersProvider } from './create-many-users.provider';
 import { CreateManyUserDTO } from '../dto/create-many-users.dto';
+import { CreateUserProvider } from './create-user.provider';
+import { FindByEmailProvider } from './find-by-email.provider';
 
 @Injectable()
 export class UsersService {
@@ -25,48 +26,21 @@ export class UsersService {
     Inject createManyUsersProvider
     */
     private readonly createManyUserProvider: CreateManyUsersProvider,
+
+    /*
+    Injecting createUserProvider
+    */
+    private readonly createUserProvider: CreateUserProvider,
+
+    /**
+     * Injecting findByEmailProvider
+     */
+    private readonly findByEmailProvider: FindByEmailProvider,
   ) {}
 
   //creating a user
   public async createUser(createUserDto: CreateUserDTO) {
-    let existingUser = undefined;
-    try {
-      existingUser = await this.userRepository.findOne({
-        where: {
-          email: createUserDto.email,
-        },
-      });
-    } catch (error) {
-      throw new RequestTimeoutException(
-        'Unable to process your request at the moment please try later',
-        {
-          description: 'Error connecting to the database',
-        },
-      );
-    }
-    if (existingUser) {
-      throw new BadRequestException('User is already exists in the database', {
-        description: 'Please signup with another email',
-      });
-    }
-    let newUser;
-    try {
-      newUser = this.userRepository.create(createUserDto);
-    } catch (error) {
-      throw new RequestTimeoutException(
-        'Unable to process your request at the moment please try later',
-        {
-          description: 'Error connecting to the database',
-        },
-      );
-    }
-    if (!newUser) {
-      throw new BadRequestException('Failed to create new user', {
-        description: 'Something went wrong while creating user',
-      });
-    }
-    newUser = await this.userRepository.save(newUser);
-    return newUser;
+    return this.createUserProvider.createUser(createUserDto);
   }
   public async findAll() {}
 
@@ -89,6 +63,10 @@ export class UsersService {
       });
     }
     return user;
+  }
+
+  public async findByEmail(email: string) {
+    return await this.findByEmailProvider.findUserByEmail(email);
   }
 
   public async createMany(createUsersDto: CreateManyUserDTO) {
