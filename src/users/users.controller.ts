@@ -3,15 +3,17 @@ import { UsersService } from './provider/users.service';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { CreateManyUserDTO } from './dto/create-many-users.dto';
 import { AccessTokenGuard } from 'src/auth/guards/access-token/access-token.guard';
-
+import { Auth } from 'src/auth/decorators/auth.decorator';
+import { AuthType } from 'src/auth/enums/auth-type.enum';
 @Controller('users')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
   @Post()
+  @Auth(AuthType.None)
   public createUser(@Body() createUserDto: CreateUserDTO) {
     return this.userService.createUser(createUserDto);
   }
-  @UseGuards(AccessTokenGuard)
+
   @Post('create-many')
   public createUsers(@Body() createUsesrDto: CreateManyUserDTO) {
     return this.userService.createMany(createUsesrDto);
