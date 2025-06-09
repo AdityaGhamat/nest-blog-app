@@ -12,14 +12,21 @@ import { CreatePostDTO } from './dto/create-posts.dto';
 import { Body } from '@nestjs/common';
 import { UpdatePostDTO } from './dto/update-posts.dto';
 import { GetPostsDTO } from './dto/get-all-posts-param.dto';
+import { ActiveUser } from 'src/auth/decorators/active-user.decorator';
+import { ActiveUserInterface } from 'src/auth/interface/active-user.interface';
+import { Auth } from 'src/auth/decorators/auth.decorator';
+import { AuthType } from 'src/auth/enums/auth-type.enum';
 
 @Controller('posts')
 export class PostsController {
   constructor(private readonly postService: PostsService) {}
 
   @Post()
-  public createPost(@Body() createPostDto: CreatePostDTO) {
-    return this.postService.createPost(createPostDto);
+  public createPost(
+    @Body() createPostDto: CreatePostDTO,
+    @ActiveUser() activeUser: ActiveUserInterface,
+  ) {
+    return this.postService.createPost(createPostDto, activeUser);
   }
 
   @Get()

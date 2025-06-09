@@ -1,9 +1,10 @@
 POST http://localhost:3000/posts
 Content-Type:application/json
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsImVtYWlsIjoiYWRpdHlhZ2hhbWF0MTBAZ21haWwuY29tIiwiaWF0IjoxNzQ5NDk2NjQxLCJleHAiOjE3NDk1MDAyNDEsImF1ZCI6ImxvY2FsaG9zdDozMDAwIiwiaXNzIjoibG9jYWxob3N0OjMwMDAifQ.EOd_Y7-QOx2DO72-xWhAlhFDuyy2xboNbSaP48mH0rY
 {
   "title": "Optimizing NestJS Performance",
   "postType": "post",
-  "slug": "optimizing-nestjs-performance",
+  "slug": "optimizing-nestjs-performanceeess",
   "status": "draft",
   "content": "Techniques and strategies for optimizing the performance of your NestJS applications, including caching, eager loading, and more.",
   "schema": "{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"NewsArticle\",\n  \"headline\": \"Exploring the Depths of Generative AI\",\n  \"image\": [\n    \"https://example.com/ai-image.jpg\"\n  ],\n  \"datePublished\": \"2025-01-15T09:00:00Z\",\n  \"dateModified\": \"2025-01-15T10:30:00Z\",\n  \"author\": {\n    \"@type\": \"Person\",\n    \"name\": \"Alex Johnson\"\n  }\n}",
