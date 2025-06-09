@@ -1,7 +1,8 @@
-import { Body, Controller, Post, Get } from '@nestjs/common';
+import { Body, Controller, Post, Get, UseGuards } from '@nestjs/common';
 import { UsersService } from './provider/users.service';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { CreateManyUserDTO } from './dto/create-many-users.dto';
+import { AccessTokenGuard } from 'src/auth/guards/access-token/access-token.guard';
 
 @Controller('users')
 export class UsersController {
@@ -10,6 +11,7 @@ export class UsersController {
   public createUser(@Body() createUserDto: CreateUserDTO) {
     return this.userService.createUser(createUserDto);
   }
+  @UseGuards(AccessTokenGuard)
   @Post('create-many')
   public createUsers(@Body() createUsesrDto: CreateManyUserDTO) {
     return this.userService.createMany(createUsesrDto);

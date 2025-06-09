@@ -3,19 +3,22 @@ Content-Type:application/json
 {
     "firstname":"aditya2",
     "lastname":"ghamat2",
-    "email":"adityaghamat10@gmail.com",
+    "email":"adityaghamat11@gmail.com",
     "password":"password"
 }
 
 POST http://localhost:3000/users/create-many
 Content-Type:application/json
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsImVtYWlsIjoiYWRpdHlhZ2hhbWF0MTBAZ21haWwuY29tIiwiaWF0IjoxNzQ5NDg1MjAzLCJleHAiOjE3NDk0ODg4MDMsImF1ZCI6ImxvY2FsaG9zdDozMDAwIiwiaXNzIjoibG9jYWxob3N0OjMwMDAifQ.3fsMlVyLnGsERZ17eFFvEIOn_LScxeB67gX7DJz9pZ0
 {
     "user":[
         {
         "firstname":"aditya2",
         "lastname":"ghamat2",
-        "email":"adityaghamat03@gmail.com",
+        "email":"adityaghamat14@gmail.com",
         "password":"password"
         }
     ]
 }
+
+POST http://localhost:3000/users
