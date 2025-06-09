@@ -1,4 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ActiveUserInterface } from 'src/auth/interface/active-user.interface';
 import { TagsService } from 'src/tags/provider/tags.service';
@@ -28,8 +33,14 @@ export class CreatePostProvider {
     createPostDto: CreatePostDTO,
     activeUser: ActiveUserInterface,
   ) {
-    const author = await this.userService.findById(activeUser.sub);
-    const tags = await this.tagService.findMultipleTags(createPostDto.tags);
+    let author = undefined;
+    let tags = undefined;
+    try {
+      author = await this.userService.findById(activeUser.sub);
+      tags = await this.tagService.findMultipleTags(createPostDto.tags);
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
     const publishedOn = new Date();
     const response = this.postRepository.create({
       ...createPostDto,
@@ -37,6 +48,12 @@ export class CreatePostProvider {
       tags: tags,
       publishedOn: publishedOn,
     });
-    return await this.postRepository.save(response);
+    try {
+      return await this.postRepository.save(response);
+    } catch (error) {
+      throw new ConflictException(error, {
+        description: 'Ensure post slug is unique and not duplicate',
+      });
+    }
   }
 }

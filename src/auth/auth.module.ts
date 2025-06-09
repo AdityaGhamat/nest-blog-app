@@ -9,6 +9,7 @@ import jwtConfig from './config/jwt.config';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthenticationGuard } from './guards/authentication/authentication.guard';
 import { AccessTokenGuard } from './guards/access-token/access-token.guard';
+import { SignInProvider } from './provider/sign-in.provider';
 @Module({
   providers: [
     AuthService,
@@ -19,6 +20,7 @@ import { AccessTokenGuard } from './guards/access-token/access-token.guard';
     },
     AccessTokenGuard,
     AuthenticationGuard,
+    SignInProvider,
   ],
   controllers: [AuthController],
   exports: [
