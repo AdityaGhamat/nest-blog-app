@@ -12,6 +12,8 @@ import { AccessTokenGuard } from './guards/access-token/access-token.guard';
 import { SignInProvider } from './provider/sign-in.provider';
 import { GenerateTokenProvider } from './provider/generate-token.provider';
 import { RefreshTokenProvider } from './provider/refresh-token.provider';
+import { GoogleAuthenticationController } from './social/google-authentication.controller';
+import { GoogleAuthenticationService } from './social/providers/google-authentication.service';
 @Module({
   providers: [
     AuthService,
@@ -25,8 +27,9 @@ import { RefreshTokenProvider } from './provider/refresh-token.provider';
     SignInProvider,
     GenerateTokenProvider,
     RefreshTokenProvider,
+    GoogleAuthenticationService,
   ],
-  controllers: [AuthController],
+  controllers: [AuthController, GoogleAuthenticationController],
   exports: [
     AuthService,
     HashingProvider,
