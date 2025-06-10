@@ -6,12 +6,8 @@ import {
 } from '@nestjs/common';
 import { UsersService } from 'src/users/provider/users.service';
 import { HashingProvider } from './hashing.provider';
-import { JwtService } from '@nestjs/jwt';
-import { ConfigType } from '@nestjs/config';
-import jwtConfig from '../config/jwt.config';
 import { User } from 'src/users/entity/user.entity';
 import { SignInDTO } from '../dto/signin.dto';
-import { ActiveUserInterface } from '../interface/active-user.interface';
 import { GenerateTokenProvider } from './generate-token.provider';
 
 @Injectable()
@@ -27,17 +23,6 @@ export class SignInProvider {
      * Injecting Hashing Provider
      */
     private readonly hashProvider: HashingProvider,
-
-    /**
-     * Injecting Jwt Service
-     */
-    private readonly jwtService: JwtService,
-
-    /**
-     * Injecting jwt configuration
-     */
-    @Inject(jwtConfig.KEY)
-    private readonly jwtConfiguration: ConfigType<typeof jwtConfig>,
 
     /**
      * Injecting Generate Token Provider

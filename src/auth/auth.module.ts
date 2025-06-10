@@ -11,6 +11,7 @@ import { AuthenticationGuard } from './guards/authentication/authentication.guar
 import { AccessTokenGuard } from './guards/access-token/access-token.guard';
 import { SignInProvider } from './provider/sign-in.provider';
 import { GenerateTokenProvider } from './provider/generate-token.provider';
+import { RefreshTokenProvider } from './provider/refresh-token.provider';
 @Module({
   providers: [
     AuthService,
@@ -23,6 +24,7 @@ import { GenerateTokenProvider } from './provider/generate-token.provider';
     AuthenticationGuard,
     SignInProvider,
     GenerateTokenProvider,
+    RefreshTokenProvider,
   ],
   controllers: [AuthController],
   exports: [
