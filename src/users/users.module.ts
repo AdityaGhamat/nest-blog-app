@@ -10,6 +10,8 @@ import { FindByEmailProvider } from './provider/find-by-email.provider';
 import jwtConfig from 'src/auth/config/jwt.config';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
+import { FindByGoogleIdProvider } from './provider/find-by-google-id.provider';
+import { CreateGoogleUserProvider } from './provider/create-google-user.provider';
 @Module({
   controllers: [UsersController],
   providers: [
@@ -17,6 +19,8 @@ import { JwtModule } from '@nestjs/jwt';
     CreateManyUsersProvider,
     CreateUserProvider,
     FindByEmailProvider,
+    FindByGoogleIdProvider,
+    CreateGoogleUserProvider,
   ],
   imports: [
     TypeOrmModule.forFeature([User]),
