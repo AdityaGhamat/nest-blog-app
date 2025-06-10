@@ -5,3 +5,10 @@ Content-Type:application/json
     "email":"adityaghamat10@gmail.com",
     "password":"password"
 }
+
+POST http://localhost:3000/auth/refresh
+Content-Type: application/json
+
+{
+    "refreshToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsImlhdCI6MTc0OTU3MjE1MCwiZXhwIjoxNzQ5NjU4NTUwLCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.wL--spm-X7N6Y0oYIjx8pDV6gvNrnPz9ZgkKlsuEbf0"
+}
