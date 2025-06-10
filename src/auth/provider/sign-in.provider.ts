@@ -12,19 +12,37 @@ import jwtConfig from '../config/jwt.config';
 import { User } from 'src/users/entity/user.entity';
 import { SignInDTO } from '../dto/signin.dto';
 import { ActiveUserInterface } from '../interface/active-user.interface';
+import { GenerateTokenProvider } from './generate-token.provider';
 
 @Injectable()
 export class SignInProvider {
   constructor(
+    /**
+     * Injecting user service
+     */
     @Inject(forwardRef(() => UsersService))
     private readonly userService: UsersService,
 
+    /**
+     * Injecting Hashing Provider
+     */
     private readonly hashProvider: HashingProvider,
 
+    /**
+     * Injecting Jwt Service
+     */
     private readonly jwtService: JwtService,
 
+    /**
+     * Injecting jwt configuration
+     */
     @Inject(jwtConfig.KEY)
     private readonly jwtConfiguration: ConfigType<typeof jwtConfig>,
+
+    /**
+     * Injecting Generate Token Provider
+     */
+    private readonly generateTokenProvider: GenerateTokenProvider,
   ) {}
   public async signIn(signInDto: SignInDTO) {
     let user: undefined | User;
@@ -40,18 +58,6 @@ export class SignInProvider {
       });
     }
 
-    const accesstoken = await this.jwtService.signAsync(
-      {
-        sub: user.id,
-        email: user.email,
-      } as ActiveUserInterface,
-      {
-        audience: this.jwtConfiguration.audience,
-        issuer: this.jwtConfiguration.issuer,
-        secret: this.jwtConfiguration.secret,
-        expiresIn: this.jwtConfiguration.accessTokenTTL,
-      },
-    );
-    return { accesstoken };
+    return await this.generateTokenProvider.generateToken(user);
   }
 }
