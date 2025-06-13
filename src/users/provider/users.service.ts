@@ -13,6 +13,8 @@ import { CreateUserProvider } from './create-user.provider';
 import { FindByEmailProvider } from './find-by-email.provider';
 import { FindByGoogleDTO } from '../dto/find-by-google-id.dto';
 import { FindByGoogleIdProvider } from './find-by-google-id.provider';
+import { CreateGoogleUserProvider } from './create-google-user.provider';
+import { GoogleUserInterface } from '../interfaces/google-user.interface';
 
 @Injectable()
 export class UsersService {
@@ -43,6 +45,11 @@ export class UsersService {
      * Injecting findByGoogleIdProvider
      */
     private readonly findByGoogleProvider: FindByGoogleIdProvider,
+
+    /**
+     * Injecting createGoogleUserProvider
+     */
+    private readonly createGoogleUserProvider: CreateGoogleUserProvider,
   ) {}
 
   //creating a user
@@ -81,5 +88,8 @@ export class UsersService {
   }
   public async findByGoogleId(findByGoogleIdDto: FindByGoogleDTO) {
     return await this.findByGoogleProvider.findByGoogleId(findByGoogleIdDto);
+  }
+  public async createGoogleUser(googleUser: GoogleUserInterface) {
+    return await this.createGoogleUserProvider.createUser(googleUser);
   }
 }
