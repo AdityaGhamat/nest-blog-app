@@ -44,7 +44,6 @@ export class Upload {
   @Column({
     type: 'int8',
     nullable: false,
-    length: 1024,
   })
   size: number;
 
