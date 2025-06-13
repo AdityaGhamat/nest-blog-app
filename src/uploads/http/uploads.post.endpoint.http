@@ -1,0 +1,9 @@
+POST http://localhost:3000/uploads/file
+Content-Type: multipart/form-data; boundary=WebKitFormBoundary
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsImVtYWlsIjoiYWRpdHlhZ2hhbWF0MTBAZ21haWwuY29tIiwiaWF0IjoxNzQ5ODMxODg0LCJleHAiOjE3NDk4MzU0ODQsImF1ZCI6ImxvY2FsaG9zdDozMDAwIiwiaXNzIjoibG9jYWxob3N0OjMwMDAifQ.NzKQeurGGuDl4QCWNXHQ85N4ybhn6_ybhxsVOkiUo4k
+--WebKitFormBoundary
+Content-Disposition: form-data; name="file"; filename="diagram-export-05-02-2025-14_52_12.png"
+Content-Type: image/png
+
+< ./diagram-export-05-02-2025-14_52_12.png
+--WebKitFormBoundary--
