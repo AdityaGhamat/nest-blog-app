@@ -7,4 +7,8 @@ export default registerAs('appConfig', () => ({
   awsCloudFrontUrl: process.env.AWS_CLOUDFRONT_URL,
   awsAccessKey: process.env.AWS_ACCESS_KEY,
   awsSecretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  nodemailer_host: process.env.NODEMAILER_EMAIL_HOST,
+  nodemailer_port: process.env.NODEMAILER_EMAIL_PORT,
+  nodemailer_user: process.env.NODEMAILER_EMAIL_USER,
+  nodemailer_password: process.env.NODEMAILER_EMAIL_PASSWORD,
 }));
