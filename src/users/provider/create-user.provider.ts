@@ -11,6 +11,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entity/user.entity';
 import { Repository } from 'typeorm';
 import { HashingProvider } from 'src/auth/provider/hashing.provider';
+import { NotificationsService } from 'src/notifications/providers/notifications.service';
 @Injectable()
 export class CreateUserProvider {
   constructor(
@@ -25,6 +26,11 @@ export class CreateUserProvider {
      */
     @Inject(forwardRef(() => HashingProvider))
     private readonly hashProvider: HashingProvider,
+
+    /**
+     * Injecting notification service
+     */
+    private readonly notificationsService: NotificationsService,
   ) {}
   public async createUser(createUserDto: CreateUserDTO) {
     let existingUser = undefined;
@@ -67,6 +73,13 @@ export class CreateUserProvider {
       });
     }
     newUser = await this.userRepository.save(newUser);
+    try {
+      await this.notificationsService.sendUserWelcome(newUser);
+    } catch (error) {
+      throw new RequestTimeoutException(error, {
+        description: 'Failed to send welcome email',
+      });
+    }
     return newUser;
   }
 }
